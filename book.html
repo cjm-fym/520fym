@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>留言板</title>
+    <link rel="stylesheet" type="text/css" href='style2.css' />
+    <title>背景音乐和背景图片</title>
+    <style>
+        /* 背景图片样式 */
+        body {
+            background-image: url('https://tse3-mm.cn.bing.net/th/id/OIP-C.hakvZcFGZbQxuhxBzqB7JAHaEm?pid=ImgDet&w=474&h=294&rs=1');
+            background-size: cover; /* 使背景图像覆盖整个页面 */
+            background-position: center; /* 背景图像居中显示 */
+            background-attachment: fixed; /* 固定背景图像 */
+            margin: 0;
+            padding: 0;
+            color: white; /* 设置文本颜色 */
+        }
+    </style>
+    <style>
+        .btn-home {
+            display: block;
+            top:  05px;    /*设置距离顶部的位置  */
+            left: 2000px; /*设置距离左侧的位置 */
+            padding: 10px;
+            margin: 20px auto;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+     </style>
+</head>
+<body>
+    <a href="fpl_v1.2.html" class="btn-home">返回首页</a>
+    <h1 align="center">给我留言</h1>
+    <h6 align="center">你有什么悄悄话对我说~</h6>
+    <div class='main'>
+        <!-- BOF 发表留言 -->
+        <!-- 记录日志的表单 -->
+    <div class="container">
+        <form id="logForm">
+            <div class="form-group">
+                <label for="entry"></label>
+                <textarea id="entry" name="entry" placeholder="偷偷告诉冯漂亮..." required style="width: 100%; box-sizing: border-box;"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="user">留言人:</label>
+                <input type="text" id="user" name="user" placeholder="例如：冯漂亮" required />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="提交" />
+            </div>
+        </form>
+        <!-- EOF 发表留言 -->
+
+        <!-- BOF 查看留言 -->
+        <div id="logEntries">
+            <!-- 动态插入日志内容 -->
+        </div>
+    </div>
+       <script>
+            document.getElementById('logForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 阻止表单的默认提交行为
+
+            // 获取表单输入的值
+            var user = document.getElementById('user').value;
+            var entry = document.getElementById('entry').value;
+
+            // 创建新的日志条目
+            var logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+           // 获取当前时间并格式化
+           function getFormattedTime() {
+               const now = new Date();
+               const year = now.getFullYear();
+               const month = String(now.getMonth() + 1).padStart(2, '0'); // 月份从0开始，所以需要加1
+               const day = String(now.getDate()).padStart(2, '0');
+               const hours = String(now.getHours()).padStart(2, '0');
+               const minutes = String(now.getMinutes()).padStart(2, '0');
+               const seconds = String(now.getSeconds()).padStart(2, '0');
+               return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+           }
+           
+           // 获取当前时间
+           const currentTime = getFormattedTime();
+            logEntry.innerHTML = '<p style="color: green;">' + user + '                                       '+'留言时间: ' + currentTime + '</p>'+
+                                 '<p style="color:MediumSlateBlue;">' + entry + '</p>';
+
+            // 将新的日志条目添加到日志显示区域
+            document.getElementById('logEntries').appendChild(logEntry);
+
+            // 清空表单输入
+            document.getElementById('logForm').reset();
+        });
+    </script>
+        <div class='msg'>
+            <div class='info'>
+                <span class='user'>chenjiaming</span>
+                <span class='time'>留言时间：2024-08-20 09:09:09</span>
+            </div>
+            <div class='content'>
+                早上好呀~今天又是想你的一天。
+            </div>
+        </div>
+        <div class='msg'>
+            <div class='info'>
+                <span class='user'>chenjiaming</span>
+                <span class='time'>留言时间：2024-08-10 10:07:07</span>
+            </div>
+            <div class='content'>
+                何止七夕，但愿朝夕，七夕快乐。
+            </div>
+        </div>
+        <div class='msg'>
+            <div class='info'>
+                <span class='user'>chenjiaming</span>
+                <span class='time'>留言时间：2024-08-03 16:13:14</span>
+            </div>
+            <div class='content'>
+                遇见你，无论以后怎样，都感觉自己赚到了。。
+            </div>
+        </div>
+        <div class='msg'>
+            <div class='info'>
+                <span class='user'>chenjiaming</span>
+                <span class='time'>留言时间：2024-02-14 01:13:14</span>
+            </div>
+            <div class='content'>
+                情人节快乐。
+            </div>
+        </div>
+        <div class='msg'>
+            <div class='info'>
+                <span class='user'>chenjiaming</span>
+                <span class='time'>留言时间：2024-02-10 23:59:50</span>
+            </div>
+            <div class='content'>
+                倒计时10秒~新春快乐！
+            </div>
+        </div>
+        <div class='msg'>
+            <div class='info'>
+                <span class='user'>chenjiaming</span>
+                <span class='time'>留言时间：2024-02-07 00:00:00</span>
+            </div>
+            <div class='content'>
+                生日快乐，嘿嘿~
+            </div>
+        </div>
+        <div class='msg'>
+            <div class='info'>
+                <span class='user'>chenjiaming</span>
+                <span class='time'>留言时间：2011-11-11 11:11:11</span>
+            </div>
+            <div class='content'>
+                18年了，还木有找到你。
+            </div>
+        </div>
+        <div class='msg'>
+            <div class='info'>
+                <span class='user'>chenjiaming</span>
+                <span class='time'>留言时间：1993-07-10 15:05:21</span>
+            </div>
+            <div class='content'>
+                我来啦，你要躲好哦，马上就把你找到。
+            </div>
+        </div>
+        <div class='msg'>
+            <div class='info'>
+                <span class='user'>chenjiaming</span>
+                <span class='time'>留言时间：1993-01-20 15:23:23</span>
+            </div>
+            <div class='content'>
+                嘿~你跑太快了，等等我，正在全速赶来的路上。
+            </div>
+        </div>
+        <!-- EOF 查看留言 -->
+    </div>
+</body>
+</html>

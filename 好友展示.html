@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>好友展示</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>背景音乐和背景图片</title>
+    <style>
+        /* 背景图片样式 */
+        body {
+            background-image: url('https://tse3-mm.cn.bing.net/th/id/OIP-C.hakvZcFGZbQxuhxBzqB7JAHaEm?pid=ImgDet&w=474&h=294&rs=1');
+            background-size: cover; /* 使背景图像覆盖整个页面 */
+            background-position: center; /* 背景图像居中显示 */
+            background-attachment: fixed; /* 固定背景图像 */
+            margin: 0;
+            padding: 0;
+            color: white; /* 设置文本颜色 */
+        }
+    </style>
+    <style>
+        .btn-home {
+            display: block;
+            top:  05px;    /*设置距离顶部的位置  */
+            left: 2000px; /*设置距离左侧的位置 */
+            padding: 10px;
+            margin: 20px auto;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+     </style>
+</head>
+<body>
+    <a href="fpl_v1.2.html" class="btn-home">返回首页</a>
+    <div class="friend-list-container">
+        <h1>我的好友</h1>
+        <div id="friend-list" class="friend-list">
+            <!-- 好友列表将由 JavaScript 动态生成 -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

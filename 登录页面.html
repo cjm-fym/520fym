@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炫酷登录切换</title>
+    <link rel="stylesheet" href="./55-炫酷登录切换.css">
+</style>
+    <title>背景音乐和背景图片</title>
+    <style>
+        /* 背景图片样式 */
+        body {
+            background-image: url('bp.jpg') ;
+            background-size: cover; /* 使背景图像覆盖整个页面 */
+            background-position: center; /* 背景图像居中显示 */
+            background-attachment: fixed; /* 固定背景图像 */
+            margin: 0;
+            padding: 0;
+            color: white; /* 设置文本颜色 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="container-form container-signup">
+            <form action="#" class="form" id="form1">
+                <h2 class="form-title">注册账号</h2>
+                <input type="text" placeholder="User" class="input" />
+                <input type="email" placeholder="Email" class="input" />
+                <input type="password" placeholder="Password" class="input" />
+                <button type="button" class="btn">点击注册</button>
+            </form>
+        </div>
+
+        <div class="container-form container-signin">
+           <!--<form action="fpl_v1.1.html" class="form" id="form2" method="post">-->
+             <form class="form" id="form2" >
+                <h2 class="form-title">欢迎登录</h2>
+                <input type="email" placeholder="Email" class="input" id="email" required />
+                <input type="password" placeholder="Password" class="input" id="password" required />
+                <a href="#" class="link">忘记密码?</a>
+                <button type="submit" class="btn">登录</button>
+            </form>
+        </div>
+        <script>
+            document.getElementById('form2').addEventListener('submit', function(event) {
+                event.preventDefault(); // 阻止默认表单提交
+        
+                var email = document.getElementById('email').value;
+                var password = document.getElementById('password').value;
+        
+                
+                // 示例账号数据（你应该从安全的服务器端进行验证）
+                var validCredentials = {
+                    'fenym@520.com': '19921228',
+                    'chenjm@520.com': '19930521'
+                };
+               // 替换以下验证逻辑为实际逻辑
+                 // 检查用户名和密码
+                 if (validCredentials[email] && validCredentials[email] === password) {
+                     window.location.href = 'fpl_v1.2.html'; // 密码正确时跳转
+                 } else {
+                     alert('用户名或密码错误，请重试。'); // 密码错误时显示提示
+                 }
+             });
+        </script>
+
+        <div class="container-overlay">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <button class="btn" id="signIn">
+                        已有账号，直接登录
+                    </button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <button class="btn" id="signUp">
+                        没有账号，点击注册
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./55-炫酷登录切换.js"></script>
+
+
+
+</body>
+
+</html>

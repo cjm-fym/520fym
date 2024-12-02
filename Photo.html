@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* 背景图片样式 */
+        body {
+            background-image: url('https://tse3-mm.cn.bing.net/th/id/OIP-C.hakvZcFGZbQxuhxBzqB7JAHaEm?pid=ImgDet&w=474&h=294&rs=1');
+            background-size: cover; /* 使背景图像覆盖整个页面 */
+            background-position: center; /* 背景图像居中显示 */
+            background-attachment: fixed; /* 固定背景图像 */
+            margin: 0;
+            padding: 0;
+            color: white; /* 设置文本颜色 */
+        }
+    </style>
+    <style>
+        .btn-home {
+            display: block;
+            top:  05px;    /*设置距离顶部的位置  */
+            left: 2000px; /*设置距离左侧的位置 */
+            padding: 10px;
+            margin: 20px auto;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+     </style>
+    <title>相册页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .upload-section {
+            margin-bottom: 20px;
+        }
+        .upload-section input[type="file"] {
+            display: block;
+            margin: 0 auto;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .gallery img {
+            max-width: 200px;
+            max-height: 150px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <a href="fpl_v1.2.html" class="btn-home">返回首页</a>
+    <div class="container">
+        <h1>相册页面</h1>
+        <div class="upload-section">
+            <form id="uploadForm">
+                <input type="file" id="fileInput" accept="image/*" multiple>
+                <button type="submit">上传图片</button>
+            </form>
+        </div>
+        <div class="gallery" id="gallery">
+            <!-- 图片将展示在这里 -->
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('fileInput');
+        const gallery = document.getElementById('gallery');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // 防止表单提交刷新页面
+            
+            const files = fileInput.files;
+            
+            if (files.length === 0) {
+                alert('请选择图片文件上传');
+                return;
+            }
+            
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        gallery.appendChild(img);
+                    };
+                    
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('请上传有效的图片文件');
+                }
+            }
+            
+            fileInput.value = ''; // 清空文件选择
+        });
+    </script>
+</body>
+</html>
