@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给风风的一封信</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background-color: #ffdab9;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            /* 开启 3D 变换 */
+            transform-style: preserve-3d;
+            /* 设置变换原点 */
+            transform-origin: center;
+            /* 添加过渡效果，使翻转更平滑 */
+            transition: transform 0.3s ease;
+        }
+
+        /* 定义信封打开时的翻转效果 */
+        .envelope.open {
+            transform: rotateY(180deg);
+            animation: flip 0.5s ease-in-out forwards;
+        }
+
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #ffbc8f;
+            z-index: 1;
+        }
+
+        .envelope::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 100px solid #ffdab9;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            z-index: 3;
+            /* 默认显示爱心 */
+            display: block;
+            /* 让点击事件穿透到信封上 */
+            pointer-events: none;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 15px;
+            top: 0;
+        }
+
+        .letter {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 280px;
+            height: 180px;
+            background-color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+            display: none;
+            z-index: 2;
+            font-family: "楷体", Arial, sans-serif;
+            font-size: 14px;
+            /* 移除初始旋转，避免信件内容反转 */
+            transform: rotateY(0deg); 
+            /* 隐藏背面，避免翻转时看到背面内容 */
+            backface-visibility: hidden;
+        }
+
+        .envelope.open .letter {
+            display: block;
+        }
+
+        /* 当信封打开时隐藏爱心 */
+        .envelope.open .heart {
+            display: none;
+        }
+       @keyframes flip {
+        from {
+            transform: rotateY(0deg);
+        }
+        to {
+            transform: rotateY(180deg);
+        }
+		from {
+            transform: rotateY(180deg);
+        }
+		to {
+            transform: rotateY(0deg);
+        }
+    }
+     
+
+        /* 烟花样式 */
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+        }
+
+        .fireworks span {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #f00;
+            border-radius: 50%;
+            pointer-events: none;
+            box-shadow: 0 0 10px #f00,
+                        0 0 20px #f00,
+                        0 0 40px #f00,
+                        0 0 80px #f00;
+            animation: animate 5s linear infinite;
+        }
+
+        /* 定义烟花粒子下落动画 */
+        @keyframes animate {
+            0% {
+                transform: translateY(-10vh);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+   <!-- <audio id="backgroundMusic" autoplay loop>        -->
+   <!--    <source src="music.mp3" type="audio/mpeg">     -->
+   <!-- </audio>                                          -->
+    <div class="envelope" id="envelope">
+        <div class="heart"></div>
+        <div class="letter">
+            <h2>亲爱的玉米:</h2>
+            <p>在这个特别的日子里，祝你生日快乐！</p>
+			<p>愿你的生活充满阳光和欢笑，所有的梦想都能成真。</p>
+			<p>愿你永远健康、快乐、幸福</p>
+        </div>
+    </div>
+    <div class="fireworks" id="fireworks">
+        <!-- 烟花粒子 -->
+        <span style="left: 10%; animation-delay: 0s;"></span>
+        <span style="left: 20%; animation-delay: 1s;"></span>
+        <span style="left: 30%; animation-delay: 2s;"></span>
+        <span style="left: 40%; animation-delay: 3s;"></span>
+        <span style="left: 50%; animation-delay: 4s;"></span>
+        <span style="left: 60%; animation-delay: 0s;"></span>
+        <span style="left: 70%; animation-delay: 1s;"></span>
+        <span style="left: 80%; animation-delay: 2s;"></span>
+        <span style="left: 90%; animation-delay: 3s;"></span>
+    </div>
+    <script>
+        const envelope = document.getElementById('envelope');
+        const fireworks = document.getElementById('fireworks');
+
+        envelope.addEventListener('click', function () {
+            if (!this.classList.contains('open')) {
+                this.classList.add('open');
+                // 打开信封5秒后弹出烟花
+                setTimeout(() => {
+                    fireworks.style.display = 'block';
+                    // 烟花弹出后10秒跳转页面
+                    setTimeout(() => {
+                        window.location.href = 'birthday_cake.html';
+                    }, 10000);
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+
+</html>
