@@ -124,7 +124,8 @@
         .envelope.open .heart {
             display: none;
         }
-       @keyframes flip {
+		
+      @keyframes flip {
         from {
             transform: rotateY(0deg);
         }
@@ -182,13 +183,26 @@
                 opacity: 0;
             }
         }
+		
+	   /* 隐藏音频播放器的默认控件，适用于基于WebKit内核的浏览器（如Chrome、Safari） */
+       .audio-container audio::-webkit-media-controls {
+            display: none!important;
+        }	
     </style>
 </head>
 
+
 <body>
-   <!-- <audio id="backgroundMusic" autoplay loop>        -->
-   <!--    <source src="music.mp3" type="audio/mpeg">     -->
-   <!-- </audio>                                          -->
+   <!-- 定义一个包含音频元素的容器 -->
+    <div class="audio-container">
+        <!-- 音频元素，设置了id以便在JavaScript中引用 -->
+        <audio id="myAudio">
+            <!-- 指定音频文件的源和类型 -->
+            <source src="music.mp3" type="audio/mpeg">
+            <!-- 如果浏览器不支持音频元素，显示此提示信息 -->
+            Your browser does not support the audio element.
+        </audio>
+    </div>
     <div class="envelope" id="envelope">
         <div class="heart"></div>
         <div class="letter">
@@ -213,20 +227,67 @@
     <script>
         const envelope = document.getElementById('envelope');
         const fireworks = document.getElementById('fireworks');
+        const audio = document.getElementById('myAudio');
 
+        let audioPlayPromise = null;
+
+        document.addEventListener('click', function () {
+            if (audio.muted) {
+                audio.muted = false;
+                audioPlayPromise = audio.play();
+                if (audioPlayPromise) {
+                    audioPlayPromise.catch(error => {
+                        console.error('播放音频时出错:', error);
+                    });
+                }
+            }
+        });
+		
         envelope.addEventListener('click', function () {
             if (!this.classList.contains('open')) {
                 this.classList.add('open');
-                // 打开信封5秒后弹出烟花
+                // 打开信封1秒后弹出烟花
                 setTimeout(() => {
                     fireworks.style.display = 'block';
-                    // 烟花弹出后10秒跳转页面
+                    // 烟花弹出后8秒跳转页面
                     setTimeout(() => {
-                        window.location.href = 'birthday_cake.html';
-                    }, 10000);
-                }, 5000);
+                        if (audioPlayPromise) {
+                            audioPlayPromise.then(() => {
+                                // 存储音频播放状态和当前播放时间
+                                localStorage.setItem('audioPlaying', true);
+                                localStorage.setItem('audioCurrentTime', audio.currentTime);
+                                window.location.href = 'birthday_cake.html';
+                            }).catch(error => {
+                                console.error('音频未准备好跳转:', error);
+                            });
+                        }
+                    }, 8000);
+                }, 1000);
             }
         });
+	        // 当文档内容加载完成后执行以下代码
+        document.addEventListener("DOMContentLoaded", function () {
+            // 通过id获取音频元素
+            const audio = document.getElementById('myAudio');
+            // 将音频设置为静音状态
+            audio.muted = true;
+            // 开启音频自动播放功能
+            audio.autoplay = true;
+            // 开启音频循环播放功能
+            audio.loop = true;
+
+            // 为整个文档添加点击事件监听器
+            document.addEventListener('click', function () {
+                console.log('点击事件已触发');
+                // 当用户点击页面时，取消音频的静音状态
+                audio.muted = false;
+                console.log('音频静音状态:', audio.muted);
+                // 手动调用play方法
+                audio.play().catch(error => {
+                    console.error('播放音频时出错:', error);
+                });
+            });
+        });	
     </script>
 </body>
 
