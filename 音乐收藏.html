@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music</title>
+    <style>
+        /* 整体样式，参考网易云音乐风格 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 音乐列表容器 */
+        .music-list {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        /* 音乐列表标题 */
+        .music-list h2 {
+            background-color: #FFB6C1;
+            color: #fff;
+            padding: 15px;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* 音乐列表项 */
+        .music-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+
+        /* 鼠标悬停效果 */
+        .music-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* 按钮容器 */
+        .button-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* 按钮样式 */
+        button {
+            background-color: #FFB6C1;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* 按钮悬停效果 */
+        button:hover {
+            background-color: #555;
+        }
+	    /* 当前播放歌曲显示区域 */
+        #current-song {
+            text-align: center;
+            margin-top: auto;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+
+    </style>
+</head>
+
+<body>
+    </div>
+    <!-- 显示当前播放歌曲 -->
+    <div id="current-song">当前播放：无</div>
+    <!-- 音乐列表容器 -->
+    <div class="music-list">
+        <h2>我的音乐</h2>
+        <!-- 音乐列表项 -->
+        <div class="music-item" data-src="唯一.mp3"        >
+		<span>唯一</span>
+		<!--<button class="play-music-btn">播放</button>-->
+		</div>
+        <div class="music-item" data-src="告白气球.mp3"     >
+		<span>告白气球</span>
+		<!--<button class="play-music-btn">播放</button>-->
+		</div>
+        <div class="music-item" data-src="多远都要在一起.mp3">
+		<span>多远都要在一起</span>
+		<!--<button class="play-music-btn">播放</button>-->
+		</div>
+		<div class="music-item" data-src="梦中的婚礼.mp3"   >
+		<span>梦中的婚礼</span>
+		<!--<button class="play-music-btn">播放</button>-->
+		</div>
+        <div class="music-item" data-src="天空之城.mp3"     >
+		<span>天空之城</span>
+		<!--<button class="play-music-btn">播放</button>-->
+		</div>
+        <div class="music-item" data-src="生日快乐.mp3"     >
+		<span>生日快乐</span>
+		<!--<button class="play-music-btn">播放</button>-->
+		</div>
+    </div>
+    <!-- 按钮容器 -->
+    <div class="button-container">
+        <button id="startBtn">开始</button>
+        <button id="playBtn">播放</button>
+        <button id="pauseBtn">暂停</button>
+        <button id="stopBtn">停止</button>
+        <button id="nextBtn">下一首</button>
+    </div>
+    <!-- 音频元素 -->
+    <audio id="audio" controls style="display: none;"></audio>
+
+    <script>
+        // 获取 DOM 元素
+        const audio = document.getElementById('audio');
+        const startBtn = document.getElementById('startBtn');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const musicItems = document.querySelectorAll('.music-item');
+		const currentSongDisplay = document.getElementById('current-song');
+		const playMusicBtns = document.querySelectorAll('.play-music-btn');
+
+        let currentIndex = 0;
+        
+		// 更新当前播放歌曲显示
+        function updateCurrentSongDisplay() {
+            if (currentIndex >= 0 && currentIndex < musicItems.length) {
+                const currentMusic = musicItems[currentIndex];
+                const songName = currentMusic.querySelector('span').textContent;
+                currentSongDisplay.textContent = `当前播放：${songName}`;
+            } else {
+                currentSongDisplay.textContent = '当前播放：无';
+            }
+        }
+
+
+
+
+        // 开始播放第一首歌曲
+        startBtn.addEventListener('click', () => {
+            const firstMusic = musicItems[0];
+            const src = firstMusic.getAttribute('data-src');
+            audio.src = src;
+            audio.play();
+			currentIndex = 0;
+            updateCurrentSongDisplay();
+        });
+
+        // 播放按钮事件
+        playBtn.addEventListener('click', () => {
+            audio.play();
+        });
+
+        // 暂停按钮事件
+        pauseBtn.addEventListener('click', () => {
+            audio.pause();
+        });
+
+        // 停止按钮事件
+        stopBtn.addEventListener('click', () => {
+            audio.pause();
+            audio.currentTime = 0;
+			currentIndex = 0;
+            currentSongDisplay.textContent = '当前播放：无';
+        });
+
+        // 下一首按钮事件
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % musicItems.length;
+            const nextMusic = musicItems[currentIndex];
+            const src = nextMusic.getAttribute('data-src');
+            audio.src = src;
+            audio.play();
+			updateCurrentSongDisplay();
+        });
+
+        // 点击音乐列表项播放对应歌曲
+        musicItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                const src = item.getAttribute('data-src');
+                audio.src = src;
+                audio.play();
+				updateCurrentSongDisplay();
+            });
+        });
+		// 自动播放下一首歌曲
+        audio.addEventListener('ended', () => {
+            currentIndex = (currentIndex + 1) % musicItems.length;
+            const nextMusic = musicItems[currentIndex];
+            const src = nextMusic.getAttribute('data-src');
+            audio.src = src;
+            audio.play();
+            updateCurrentSongDisplay();
+        });
+    </script>
+</body>
+
+</html>
