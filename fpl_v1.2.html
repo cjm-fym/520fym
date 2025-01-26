@@ -4,15 +4,6 @@
 <meta charset="UTF-8">
 <meta name="keywords" content="tzyh" />
 <title>Resume</title>
-<title>Audio Example</title>
-<style>
-  .audio-container {
-    position: absolute; /* 可以使用 absolute, relative, fixed 或 sticky */
-    top: 70px;    /*设置距离顶部的位置  */
-    left: 1000px; /*设置距离左侧的位置 */
-  }
-</style>
-    <title>背景音乐和背景图片</title>
     <style>
         /* 背景图片样式 */
         body {
@@ -27,7 +18,77 @@
     </style>
 
 
+    <style>
+        /* 整体播放器样式 */
+       .music-player {
+            position: absolute; 
+            top: 82px;
+            right: 20px;
+            width: 330px;
+            height: 22px;
+            padding: 9px;
+            font-family: "STKaiti", "KaiTi", serif;
+            color: blue;
+			border-radius: 100px;
+            border: 2px solid pink;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+			overflow: hidden;
+        }
 
+        /* 音乐信息显示区域 */
+       .music-info {
+            text-align: center;
+            width: 150px;
+        }
+
+        /* 按钮容器 */
+       .button-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 按钮样式 */
+       .button-container button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-family: "STKaiti", "KaiTi", serif;
+            font-size: 12px;
+            margin: 0 5px;
+            cursor: pointer;
+            outline: none;
+            transition: color 0.3s ease;
+        }
+
+       .button-container button:hover {
+            color: #d2691e;
+        }
+
+	 
+
+       /* 进度条容器样式 */
+       .progress-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(165, 42, 42, 0.2);
+            border-radius: 50px;
+        }
+
+        /* 进度条样式 */
+       .progress {
+            height: 100%;
+            background-color: pink;
+            width: 0;
+            border-radius: 50px;
+        }
+    </style>
 </head>
 <SCRIPT language=JavaScript>
 document.oncontextmenu=new Function("event.returnValue=false;");
@@ -47,19 +108,84 @@ document.onselectstart=new Function("event.returnValue=false;");
 </script>
 
 <body >
-<!-- <embed src="966205028.mp3" width="32" height="32" autostart="true" loop="true"></embed>-->
-<!-- <audio src="966205028.mp3" autoplay loop></audio>
-<!-- 背景音乐播放器 -->
-<!--<audio id="background-music" autoplay loop>
-<!--<source src="music/966205028.mp3" type="audio/mpeg">
-<!--您的浏览器不支持音频播放。
-<!--</audio>-->
-<div class="audio-container">
-  <audio controls>
-    <source src="music.mp3" type="audio/mpeg" >
-    Your browser does not support the audio element.
-  </audio>
-</div>
+
+    <!-- // 音乐播放器  开始--> 
+    <div class="music-player">
+        <div class="music-info" id="musicInfo">暂无</div>
+        <audio id="musicPlayer" loop>
+            <source src="yourMusicFile.mp3" type="audio/mpeg">
+            您的浏览器不支持音频播放。
+        </audio>
+            <div class="progress" id="progress"></div>
+        <div class="button-container">
+		    <button onclick="playMusic()">播放</button>
+			<button onclick="pauseMusic()">暂停</button>
+		    <button onclick="startMusic()">开始</button>
+			<button onclick="stopMusic()">停止</button>
+            <button onclick="nextMusic()">下一曲</button>
+   
+
+        </div>
+    </div>
+
+    <script>
+        // 音乐文件列表，实际应用中可以从服务器获取
+        const musicList = ['唯一.mp3', '告白气球.mp3', '多远都要在一起.mp3','梦中的婚礼.mp3', '天空之城.mp3', '生日快乐.mp3'];
+        let currentIndex = 0;
+
+        const musicPlayer = document.getElementById('musicPlayer');
+        const musicInfo = document.getElementById('musicInfo');
+        const progress = document.getElementById('progress');
+
+        function playMusic() {
+            musicPlayer.play();
+            updateMusicInfo();
+        }
+
+        function nextMusic() {
+            currentIndex = (currentIndex + 1) % musicList.length;
+            musicPlayer.src = musicList[currentIndex];
+            musicPlayer.play();
+            updateMusicInfo();
+            progress.style.width = '0';
+        }
+
+        function pauseMusic() {
+            musicPlayer.pause();
+        }
+
+        function stopMusic() {
+            musicPlayer.pause();
+            musicPlayer.currentTime = 0;
+            musicInfo.textContent = '暂无信息';
+            progress.style.width = '0';
+        }
+
+        function startMusic() {
+            if (musicPlayer.paused) {
+                musicPlayer.play();
+                updateMusicInfo();
+            }
+        }
+
+        function updateMusicInfo() {
+            // 去掉 .mp3 后缀
+            const fileName = musicList[currentIndex].replace('.mp3', '');
+            musicInfo.textContent = `${fileName}`;
+        }
+
+        // 监听音频的时间更新事件，更新进度条
+        musicPlayer.addEventListener('timeupdate', function () {
+            const percent = (musicPlayer.currentTime / musicPlayer.duration) * 100;
+            progress.style.width = percent + '%';
+        });
+
+        // 页面加载完成后自动播放
+        document.addEventListener('DOMContentLoaded', function () {
+            playMusic();
+        });
+    </script>
+<!-- // 音乐播放器  结束--> 
 <!-- Copyright ?2005. Spidersoft Ltd -->       
 <style>
 A.applink:hover {border: 2px dotted #DCE6F4;padding:2px;background-color:#ffff00;color:green;text-decoration:none}
@@ -70,14 +196,6 @@ A.info:hover    {color:green;background:transparent;text-decoration:underline}
 <!-- /Copyright ?2005. Spidersoft Ltd -->
 <center>
 <table width="960" border="0" class="main"  cellspacing="0" cellpadding="0" style=" margin-bottom:20px;"  >
- <!--  <tr>                                                                                                        
- <!--    <td height="76" colspan="3" class="branding">
- <!--    <center><a href="index.html"  >
- <!--       <!-- images/logo.jpg -->
- <!--       <!-- <img src="images/logo.jpg"  alt="Horus" width="300" height="109" /></center>-->
- <!--       <img src="http://m.qpic.cn/psc?/V53BfmoC0nIEsh0Gxk7o1IuuXQ2CU9U0/LiySpxowE0yeWXwBdXN*SfgFUVPFGV4iYdBYFuDyft4YwQJ.sERmjt*0rLQTojrIOy8SkvFSWWtnUBJgftiwlpN9L5Kl2Hni9nUandlXbs0!/b&bo=jgNxA44DcQMBFzA!&rf=viewer_4"  alt="Horus" width="130" height="79" /></center>
- <!--    </a> </td> 
- <!--  </tr>-->
   <tr>
 <td height="125" colspan="3">
  <table width="960" border="0" align="center" cellspacing="0" class="nav">
